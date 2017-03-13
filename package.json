@@ -1,0 +1,33 @@
+{
+  "name": "dink-bot",
+  "version": "1.0.0",
+  "description": "Discord Bot.",
+  "engines": {
+    "node": "6.9.1"
+  },
+  "main": "bot.js",
+  "dependencies": {
+    "eris": "^0.5.2",
+    "websocket": "^1.0.24"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asdaa0/dink-bot.git"
+  },
+  "keywords": [
+    "dink",
+    "bot",
+    "discord",
+    "heroku"
+  ],
+  "author": "asdaa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/asdaa0/dink-bot/issues"
+  },
+  "homepage": "https://github.com/asdaa0/dink-bot#readme"
+}
