@@ -1,14 +1,21 @@
 {
   "name": "dink-bot",
-  "version": "1.0.0",
-  "description": "Discord Bot.",
+  "version": "2.0.0",
+  "description": "Discord Bot",
   "engines": {
-    "node": "6.9.1"
+    "node": "8.2.1"
   },
-  "main": "bot.js",
+  "main": "botdjs.js",
   "dependencies": {
+    "chalk": "^2.0.1",
+    "circular-json": "^0.3.3",
+    "bufferutil": "^3.0.2",
     "eris": "^0.5.2",
-    "websocket": "^1.0.24"
+    "discord.js": "^11.1.0",
+    "request": "^2.81.0",
+    "wait.for-es6": "^0.1.0",
+    "websocket": "^1.0.24",
+    "uws": "^8.14.1"
   },
   "devDependencies": {},
   "scripts": {

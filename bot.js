@@ -1,6 +1,9 @@
-const Eris = require("eris");
+const chalk = require('chalk');
 
-var bot = new Eris("MjgzNjg5Nzg0Mjg5OTE4OTg2.C44uWg.xZ14wn_Bt88rdLKxeudB3rr7Ork");
+botToken = "MjgzNjg5Nzg0Mjg5OTE4OTg2.C44uWg.xZ14wn_Bt88rdLKxeudB3rr7Ork"
+const Eris = require("eris");
+var bot = new Eris(botToken);
+
 var evalCommand = "!eval";
 var slapCommand = "!slap";
 var loveCommand = "!love";
@@ -9,26 +12,65 @@ var testCommand = "!test";
 
 var fuckYou = "fuck you ";
 var regExp = /\`([^)]+)\`/;
+var ch = [,321044318821285900 ,321044875267145741 ,290594458569932800 ,290602107957149698];
+var chName = [, 'general', 'bots', 'dm_asdaa', 'dm_keelan'];
+var curCh = 3;
 var lastDrop;
-var interval
+var interval;
 var i = 1;
+
+var message;
+var lastMessage;
 
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 
 bot.on("ready", () => { // When the bot is ready
-    console.log("Bot Ready!"); // Log "Ready!"
+    console.log("Bot Ready!");
+	/*
+	function msg() {
+		setTimeout(function () {
+			if(message !== lastMessage) {
+				pr = bot.getDMChannel("152170950845136896");
+				pr.then(function(ch) {
+					br = bot.createMessage(ch.id, message);
+					br.then(function(ms) {
+						console.log(ms);
+					});
+				});
+				//bot.createMessage(ch[curCh], message);
+				lastMessage = message;
+			}
+			msg();
+		}, 100);
+	}
+	msg();
+	*/
 });
 
 process.stdin.on('data', function (text) {
-	bot.createMessage(290594458569932800, text);
+	if(text.startsWith("null")) {message = null;}
+	if(text.startsWith("ch")) {
+		if(text.length <= 5) {
+            console.log(chalk.magenta("Specify channel"));
+            return;
+        } else {
+			curCh = parseInt(text.substring(3));
+			console.log(chalk.magenta("Switched channel to " + chName[curCh]))
+		}
+	} else {
+		//message = text;
+		//console.log(curCh);
+		//sendPOST(ch[curCh], text);
+		bot.createMessage(ch[curCh], text);
+	}
 });
 
 bot.on("messageCreate", (msg) => {
 	if(msg.channel.id === "290594458569932800") { // My dm id: 290594458569932800
-		console.log(msg.author.username + ": " + msg.content);
+		console.log(chalk.cyan(msg.author.username + ": ") + chalk.green(msg.content));
 	} else if(msg.channel.id === "290602107957149698") { // Keelans dm id: 290602107957149698
-		console.log(msg.author.username + ": " + msg.content);
+		console.log(chalk.cyan(msg.author.username + ": ") + chalk.green(msg.content));
 	}
 
 	if(msg.content === "!ping") {
@@ -89,7 +131,7 @@ bot.on("messageCreate", (msg) => {
         var rated = msg.content.substring(rateCommand.length + 1);
 		var rating = Math.floor((Math.random() * 10) + 1);
 		bot.createMessage(msg.channel.id, "I rate " + rated + " a solid " + rating + "/10");
-    } else if(msg.content === "dinkbot, commence smile") {
+    } else if(msg.content === "dinkbot, smile") {
         bot.createMessage(msg.channel.id, "8===================D");
     } else if(msg.content === "same") {
 		bot.createMessage(msg.channel.id, "Same.");
@@ -98,15 +140,27 @@ bot.on("messageCreate", (msg) => {
     } else if(msg.content.startsWith(fuckYou)) {
         var obj = msg.content.substring(fuckYou.length);
 		bot.createMessage(msg.channel.id, "Yeah, fuck you " + obj + ".");
-    }
+    } else if(msg.author.id !== "283689784289918986") {
+		bot.createMessage(msg.channel.id, "XD");
+	}
 });
 
-function match(message) {
-	
-}
+var request = require('request');
+function sendPOST(chID, message) {
+	url = "https://discordapp.com/api/channels/" + chID + "/messages"
+	headers = { "Authorization":"Bot " + botToken,
+            "User-Agent":"myBotThing (http://some.url, v0.1)",
+            "Content-Type":"application/json", }
 
-function matchStart(message) {
+	POSTedJSON =  JSON.stringify ( {"content":message} )
 	
+	request.post({
+		headers: headers,
+		url:     url,
+		body:    POSTedJSON
+	}, function(error, response, body){
+		console.log(chalk.gray(body));
+	});
 }
 
 bot.connect(); // Get the bot to connect to Discord
